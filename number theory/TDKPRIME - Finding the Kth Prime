@@ -1,0 +1,35 @@
+.................................using seive........................................
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> primes;
+bool a[90000001];
+void seive()
+{
+	a[0]=a[1]=true;
+	for(int i=2;i*i<86028122;i++)
+	{
+		if(a[i]==false)
+		{
+			for(int j=i*i;j<86028122;j+=i)
+			{
+				a[j]=true;
+			}
+		}
+	}
+	for(int i=0;i<86028122;i++)
+	{	if(a[i]==false)
+		primes.push_back(i);
+	}
+}
+int main()
+{	
+	int t;
+	cin>>t;
+	seive();
+	while(t--)
+	{
+		int n;
+		cin>>n;
+		cout<<primes[n-1]<<endl;
+	}
+}
