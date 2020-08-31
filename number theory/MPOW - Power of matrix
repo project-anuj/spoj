@@ -1,0 +1,77 @@
+...............................matrix exponentiation......................................
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+#define REP(i,n) for(int i=0;i<n;i++)
+#define N 101
+#define mod 1000000007
+ll a[N][N],I[N][N];
+void mul(ll a[][N],ll I[][N],ll dim)
+{	ll res[N+1][N+1];
+	REP(i,dim)
+	{
+		REP(j,dim)
+		{
+			res[i][j]=0;
+			REP(k,dim)
+			{
+				res[i][j]=(res[i][j]%mod+((a[i][k]%mod)*(I[k][j]%mod))%mod)%mod;
+			}
+		}
+	}
+	REP(i,dim)
+	{
+		REP(j,dim)
+		{
+			I[i][j]=res[i][j];
+		}
+	}
+}
+int main()
+{
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	ll dim,n;
+	cin>>dim>>n;
+	REP(i,dim)
+	{
+		REP(j,dim)
+		{
+			cin>>a[i][j];
+		}
+	}
+	REP(i,dim)
+	{
+		REP(j,dim)
+		{
+			if(i==j)
+			I[i][j]=1;
+			else
+			I[i][j]=0;
+		}
+	}
+	while(n>0)
+	{
+		if(n&1)
+		{
+			mul(a,I,dim);
+			n--;
+		}
+		else{
+			mul(a,a,dim);
+		n=n/2;
+		}
+	}
+	for(ll i=0;i<dim;i++)
+	{
+		for(ll j=0;j<dim;j++)
+		{
+			cout<<I[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	}
+} 
