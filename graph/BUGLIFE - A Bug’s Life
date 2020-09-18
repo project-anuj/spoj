@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> v[10001];
+int visited[10001];
+int color[10001];
+
+bool dfs(int node,int c)
+{
+	visited[node]=1;
+	color[node]=c;
+	for(auto x:v[node])
+	{
+		if(visited[x]==0)
+		{
+			if(dfs(x,c^1)==false)
+			return false;
+		}
+		else
+		if(color[node]==color[x])
+		return false;
+	}
+	return true;
+}
+int main()
+{
+	int t;
+	cin>>t;
+	for(int i=1;i<=t;i++)
+	{
+	int bugs,interaction;
+	cin>>bugs>>interaction;
+	for(int j=1;j<=bugs;j++)
+	v[j].clear(),visited[j]=0;
+	while(interaction--)
+	{
+		int a,b;
+		cin>>a>>b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+	}
+	bool flag=true;
+	for(int j=1;j<=bugs;j++)
+	{
+		if(visited[j]==0&&dfs(j,0)==false)
+		{	
+			flag=false;
+			break;
+		}
+	}
+	if(flag==true)
+	{
+	cout<<"Scenario #"<<i<<":\n";
+	cout<<"No suspicious bugs found!"<<endl;
+	}
+	else
+	{
+		cout<<"Scenario #"<<i<<":\n";
+		cout<<"Suspicious bugs found!"<<endl;
+	}
+	}
+}
