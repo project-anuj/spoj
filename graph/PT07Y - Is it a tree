@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> v[100001];
+int visited[100001];
+
+void dfs(int node)
+{
+	visited[node]=1;
+	for(auto x:v[node])
+	{
+		if(visited[x]==0)
+		dfs(x);
+	}
+}
+int main()
+{
+	int n,m;
+	cin>>n>>m;
+	int t=m;
+	while(t--)
+	{
+		int a,b;
+		cin>>a>>b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+	}
+	if(m==n-1)
+	{
+		int count=0;
+		for(int i=1;i<=n;i++)
+		{
+			if(visited[i]==0)
+			dfs(i),count++;
+		}
+		if(count==1)
+		cout<<"YES\n";
+		else
+		cout<<"NO\n";
+	}
+	else
+	{
+		cout<<"NO\n";	
+	}
+}
