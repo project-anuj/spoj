@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> ar[100001];
+int visited[100001];
+int dis[100001];
+
+void dfs(int node,int d)
+{
+	visited[node]=1;
+	dis[node]=d;
+	for(auto x:ar[node])
+	{
+		if(visited[x]==0)
+		{
+			dfs(x,d+1);
+		}
+	}
+}
+int main()
+{
+	int n;
+	cin>>n;
+	for(int i=0;i<n-1;i++)
+	{
+		int u,v;
+		cin>>u>>v;
+		ar[u].push_back(v);
+		ar[v].push_back(u);
+	}
+	dfs(1,0);
+	int mx=INT_MIN,k;
+	for(int i=1;i<=n;i++)
+	{
+		if(dis[i]>mx)
+		{
+			mx=dis[i];
+			k=i;
+		}
+	}
+	for(int i=1;i<=n;i++)
+	visited[i]=0,dis[i]=0;
+	dfs(k,0);
+	mx=INT_MIN;
+	for(int i=1;i<=n;i++)
+	mx=max(mx,dis[i]);
+	cout<<mx<<endl;
+}
